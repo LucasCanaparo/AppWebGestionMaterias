@@ -9,6 +9,9 @@ export default function Menu() {
       <Link to='/mecanica'>
         <button>Ingenieria Mecanica</button>
       </Link>
+      <Link to='/sistemas'>
+        <button>Ingenieria en Sistemas</button>
+      </Link>
     </div>
   )
 }
