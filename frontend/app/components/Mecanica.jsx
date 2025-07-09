@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 //import '../CSS/Mecanica.css'
 
 export default function Mecanica() {
@@ -43,11 +44,6 @@ export default function Mecanica() {
         //alert('Aprobasteeeeeee');
 
         //actualiza el estado
-        /*
-        const materiaAprobada = materias.map((m) =>
-          m.id === data.id ? { ...m, aprobada: true } : m
-        )
-        */
         const materiaAprobada = materias.map((m) => {
           // Si es la materia aprobada, marcala como aprobada
           if (m.id === data.id) {
@@ -81,13 +77,25 @@ export default function Mecanica() {
 
       const desaprobada = await axios.put(`http://localhost:4000/materiasMecanica/${materiaActualizada.id}`, materiaActualizada)
       if (desaprobada) {
-        alert('Quitaste la aprobacion');
+        //alert('Quitaste la aprobacion');
 
         //actualiza el estado
-        const materiaDesprobada = materias.map((m) =>
-          m.id === data.id ? { ...m, aprobada: false } : m
-        )
-        setMaterias(materiaDesprobada)
+         const materiaDesaprobada = materias.map((m) => {
+          // Si es la materia aprobada, marcala como aprobada
+          if (m.id === data.id) {
+            return { ...m, aprobada: false }
+          }
+
+          // Si no, revisá si tenía a esta materia como correlativa
+          const nuevasCorrelativas = m.Correlativas.map((corr) =>
+            corr.id === data.id ? { ...corr, aprobada: false } : corr
+          )
+
+          return { ...m, Correlativas: nuevasCorrelativas }
+        })
+
+        
+        setMaterias(materiaDesaprobada)
       } else {
         console.log('error al quitar la aprobacion a la materia :(')
       }
@@ -142,7 +150,7 @@ export default function Mecanica() {
                   {materiasPorAnio[anio].map((e, i) => (
                     <div
                       key={i}
-                      className="card shadow-sm"
+                      className={`card shadow-sm mb-4 px-3 py-2 border-0 rounded-4`}
                       style={{
                         padding: '1rem',
                         borderRadius: '12px',
@@ -160,7 +168,7 @@ export default function Mecanica() {
                     >
                       <div className="card-body" >
                         <h5 style={{ fontWeight: 'bold' }}>{e.nombre}</h5>
-                        <p style={{ padding: '2px' }}>
+                        <div className="d-flex flex-wrap justify-content-center gap-1 py-1">
                           {e.Correlativas.length > 0 && !e.aprobada ? (
                             e.Correlativas
                               .filter((c) => !c.aprobada)
@@ -176,7 +184,7 @@ export default function Mecanica() {
                           ) : (
                             <span></span>
                           )}
-                        </p>
+                        </div>
 
                         {e.aprobada ? <button
                           onClick={() => handleDesaprobado(e)}
@@ -207,6 +215,15 @@ export default function Mecanica() {
         </div>
       )
       }
+      <Link to='/'>
+        <button className='btn btn-secondary'
+          style={{
+            position: 'absolute',
+            top: '20px',
+            left: '20px',
+            zIndex: 1000
+          }}>Volver al menú</button>
+      </Link>
     </div >
   )
 }
