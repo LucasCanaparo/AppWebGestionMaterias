@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import './App.css'
-import Mecanica from '../components/mecanica'
+import Mecanica from '../components/Mecanica'
 import Menu from '../components/Menu'
 
 function App() {

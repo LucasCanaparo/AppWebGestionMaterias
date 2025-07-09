@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import '../CSS/Mecanica.css'
+//import '../CSS/Mecanica.css'
 
 export default function Mecanica() {
 
@@ -40,12 +40,27 @@ export default function Mecanica() {
 
       const aprobada = await axios.put(`http://localhost:4000/materiasMecanica/${materiaActualizada.id}`, materiaActualizada)
       if (aprobada) {
-        alert('Aprobasteeeeeee');
+        //alert('Aprobasteeeeeee');
 
         //actualiza el estado
+        /*
         const materiaAprobada = materias.map((m) =>
           m.id === data.id ? { ...m, aprobada: true } : m
         )
+        */
+        const materiaAprobada = materias.map((m) => {
+          // Si es la materia aprobada, marcala como aprobada
+          if (m.id === data.id) {
+            return { ...m, aprobada: true }
+          }
+
+          // Si no, revisá si tenía a esta materia como correlativa
+          const nuevasCorrelativas = m.Correlativas.map((corr) =>
+            corr.id === data.id ? { ...corr, aprobada: true } : corr
+          )
+
+          return { ...m, Correlativas: nuevasCorrelativas }
+        })
         setMaterias(materiaAprobada)
       } else {
         console.log('error al aprobar la materia :(')
@@ -96,82 +111,97 @@ export default function Mecanica() {
 
 
   return (
-    <div style={{ backgroundColor: '#f1f5f9', minHeight: '100vh', padding: '20px' }}>
+    <div style={{
+      width: '100%',
+      margin: '0 auto',
+      padding: '20px',
+      backgroundColor: '#1e1e2f',
+      borderRadius: '10px'
+    }}>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous"></link>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-      <h1>Soy el componente de mecanica</h1>
+      <h1 style={{ color: 'white' }}>Malla Ingenieria Mecánica</h1>
 
       {materias.length === 0 ? (
         <p>No hay materias disponibles</p>
       ) : (
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: '1rem',
+          flexWrap: 'wrap'
+        }}>
           {Object.keys(materiasPorAnio)
             .sort((a, b) => a - b)
             .map((anio) => (
-              <div key={anio} style={{ flex: 1 }}>
-                <h3 style={{ textAlign: 'center' }}> {anio} Año </h3>
-                {materiasPorAnio[anio].map((e, i) => (
-                  <div
-                    key={i}
-                    className="card mb-3"
-                    style={{
-                      cursor: 'default',
-                      minWidth: '200px',
-                      border: e.aprobada
-                        ? '2px solid #0d9488'
-                        : !puedeAprobar(e)
-                          ? '2px solid #d6d6d6'
-                          : '1px solid #ccc',
-                      backgroundColor: e.aprobada
-                        ? '#20c997'
-                        : !puedeAprobar(e)
-                          ? '#f8f9fa'
-                          : '#ffffff',
-                      opacity: !puedeAprobar(e) ? 0.6 : 1 
-                    }}
-                  >
-                    <div className="card-body">
-                      <h5 className="card-title">{e.nombre}</h5>
-                      <p>
-                        {e.Correlativas.length > 0 ? (
-                          e.Correlativas.map((c, j) => (
-                            <span key={j} className="badge bg-primary me-1">
-                              {c.nombre}
-                            </span>
-                          ))
-                        ) : (
-                          <span className="text-muted">Sin correlativas</span>
-                        )}
-                      </p>
-                      <p className="card-text">
-                        <small className="text-muted">Aprobada: {e.aprobada === false ? 'NO' : 'SI'} </small>
-                      </p>
-                      <p className="card-text">
-                        <small className="text-muted">{e.anio} Año </small>
-                      </p>
-                      {e.aprobada ? <button
-                        onClick={() => handleDesaprobado(e)}
-                        className="btn btn-secondary"
-                        disabled={!e.aprobada}
-                      >
-                        Quitar aprobado
-                      </button> : (
-                        <button
-                          onClick={() => handleAprobado(e)}
-                          className={`btn ${e.aprobada ? 'btn-secondary' : puedeAprobar(e) ? 'btn-success' : 'btn-outline-secondary'}`}
-                          disabled={e.aprobada || !puedeAprobar(e)}
-                        >
-                          {e.aprobada
-                            ? 'Ya aprobada'
-                            : !puedeAprobar(e)
-                              ? 'Correlativas pendientes'
-                              : 'Aprobar'}
-                        </button>
+              <div key={anio} style={{
+                flex: 1, minWidth: '220px'
+              }}>
+                <h3 style={{ textAlign: 'center', color: 'white' }}> {anio} Año </h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {materiasPorAnio[anio].map((e, i) => (
+                    <div
+                      key={i}
+                      className="card shadow-sm"
+                      style={{
+                        padding: '1rem',
+                        borderRadius: '12px',
+                        backgroundColor: e.aprobada
+                          ? '#20c997'
+                          : puedeAprobar(e)
+                            ? '#fff'
+                            : '#f3f4f6',
+                        color: !puedeAprobar(e) ? '#9ca3af' : 'inherit',
+                        border: e.aprobada
+                          ? '2px solid #10b981'
+                          : '1px solid #e5e7eb',
+                        transition: '0.3s ease'
+                      }}
+                    >
+                      <div className="card-body" >
+                        <h5 style={{ fontWeight: 'bold' }}>{e.nombre}</h5>
+                        <p style={{ padding: '2px' }}>
+                          {e.Correlativas.length > 0 && !e.aprobada ? (
+                            e.Correlativas
+                              .filter((c) => !c.aprobada)
+                              .map((c, j) => (
+                                <span
+                                  key={j}
+                                  className="badge bg-primary me-1"
+                                  style={{ fontSize: '0.65rem' }}
+                                >
+                                  {c.nombre}
+                                </span>
+                              ))
+                          ) : (
+                            <span></span>
+                          )}
+                        </p>
 
-                      )}
+                        {e.aprobada ? <button
+                          onClick={() => handleDesaprobado(e)}
+                          className="btn btn-secondary"
+                          disabled={!e.aprobada}
+                        >
+                          Quitar aprobado
+                        </button> : (
+                          <button
+                            onClick={() => handleAprobado(e)}
+                            className={`btn ${e.aprobada ? 'btn-secondary' : puedeAprobar(e) ? 'btn-success' : 'btn-outline-secondary'}`}
+                            disabled={e.aprobada || !puedeAprobar(e)}
+                          >
+                            {e.aprobada
+                              ? 'Ya aprobada'
+                              : !puedeAprobar(e)
+                                ? 'Correlativas pendientes'
+                                : 'Aprobar'}
+                          </button>
+
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             ))}
         </div>
