@@ -20,6 +20,10 @@ const materias = db.define('Materias', {
         type: DataTypes.BOOLEAN,
         allowNull: true,
         defaultValue: false
+    },
+    carrera: {
+        type: DataTypes.INTEGER,
+        allowNull: true
     }
     },
     {
@@ -34,5 +38,6 @@ materias.belongsToMany(materias, {
   foreignKey: 'materiaId',
   otherKey: 'correlativaId'
 });
+
 
 export default materias

@@ -1,7 +1,8 @@
 import materias from "../models/materias.model.js"
 
-const getAll = () => {
+const getAll = async(options = {}) => {
     return materias.findAll({
+        ...options,
         include: {
             model: materias,
             as: 'Correlativas',
