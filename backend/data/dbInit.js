@@ -1,8 +1,8 @@
 import { Sequelize } from 'sequelize'
 
-const sequelize = new Sequelize('MateriasMecanica', '', '', {
+const sequelize = new Sequelize('MateriasUtnFrc', '', '', {
     dialect: 'sqlite',
-    storage: './materiasMecanica.db'
+    storage: './materiasUtnFrc.db'
 
 }) 
 
