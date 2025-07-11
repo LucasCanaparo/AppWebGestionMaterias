@@ -3,14 +3,28 @@ import cors from 'cors'
 import db from './data/dbInit.js'
 import router from './routes/routes.js'
 import materias from './models/materias.model.js'
+import usuarios from './models/usuarios.model.js'
+
+import usuariosRouter from "./routes/usuarios.js"
+import seguridadRouter from './routes/seguridad.js'
 
 const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(router)
 
+app.use(seguridadRouter);
+app.use(usuariosRouter);
+
+
 async function dbInit() {
     await db.sync({ force: true })
+
+    //Creo los usuarios
+    await usuarios.bulkCreate([
+        { UsuarioId: 1, Usuario: 'admin', Clave: '123', Rol: 'admnistrador' },
+        { UsuarioId: 2, Usuario: 'monica', Clave: '123', Rol: 'estudiante' }
+    ])
 
     // Crear materias base generales y de mecanica
     //1er año
@@ -112,35 +126,35 @@ async function dbInit() {
     const I1s = await materias.create({ nombre: "Inglés 1", anio: 1, carrera: 2 });
 
     //2do año
-    const I2s = await materias.create({ nombre: "Inglés 2", anio: 2 , carrera: 2});
+    const I2s = await materias.create({ nombre: "Inglés 2", anio: 2, carrera: 2 });
     const SSL = await materias.create({ nombre: "Sintaxis y Semántica de los Lenguajes", anio: 2, carrera: 2 });
     const PPR = await materias.create({ nombre: "Paradigmas de Programación", anio: 2, carrera: 2 });
     const SOP = await materias.create({ nombre: "Sistemas Operativos", anio: 2, carrera: 2 });
     const ASI = await materias.create({ nombre: "Análisis de Sistemas de Información", anio: 2, carrera: 2 });
-    const PyEs = await materias.create({ nombre: "Probabilidad y Estadística", anio: 2 , carrera: 2});
+    const PyEs = await materias.create({ nombre: "Probabilidad y Estadística", anio: 2, carrera: 2 });
 
     //3er año
     const ECO = await materias.create({ nombre: "Economía", anio: 3, carrera: 2 });
     const BDD = await materias.create({ nombre: "Bases de Datos", anio: 3, carrera: 2 });
-    const DDS = await materias.create({ nombre: "Desarrollo de Software", anio: 3 , carrera: 2});
-    const COM = await materias.create({ nombre: "Comunicación de Datos", anio: 3 , carrera: 2});
-    const AN = await materias.create({ nombre: "Análisis Numérico", anio: 3 , carrera: 2});
+    const DDS = await materias.create({ nombre: "Desarrollo de Software", anio: 3, carrera: 2 });
+    const COM = await materias.create({ nombre: "Comunicación de Datos", anio: 3, carrera: 2 });
+    const AN = await materias.create({ nombre: "Análisis Numérico", anio: 3, carrera: 2 });
     const DSI = await materias.create({ nombre: "Diseño de Sistemas de Información", anio: 3, carrera: 2 });
 
     //4to año
     const LEG = await materias.create({ nombre: "Legislación", anio: 4, carrera: 2 });
     const ICS = await materias.create({ nombre: "Ingeniería y Calidad de Software", anio: 4, carrera: 2 });
-    const RDA = await materias.create({ nombre: "Redes de Datos", anio: 4 , carrera: 2});
-    const IOP = await materias.create({ nombre: "Investigación Operativa", anio: 4 , carrera: 2});
-    const SIM = await materias.create({ nombre: "Simulación", anio: 4 , carrera: 2});
+    const RDA = await materias.create({ nombre: "Redes de Datos", anio: 4, carrera: 2 });
+    const IOP = await materias.create({ nombre: "Investigación Operativa", anio: 4, carrera: 2 });
+    const SIM = await materias.create({ nombre: "Simulación", anio: 4, carrera: 2 });
     const TPA = await materias.create({ nombre: "Tecnologías para la Automatización", anio: 4, carrera: 2 });
-    const ADSI = await materias.create({ nombre: "Administración de Sistemas de Información", anio: 4 , carrera: 2});
+    const ADSI = await materias.create({ nombre: "Administración de Sistemas de Información", anio: 4, carrera: 2 });
 
     //5to año
-    const IA = await materias.create({ nombre: "Inteligencia Artificial", anio: 5 , carrera: 2});
+    const IA = await materias.create({ nombre: "Inteligencia Artificial", anio: 5, carrera: 2 });
     const CDATOS = await materias.create({ nombre: "Ciencia de Datos", anio: 5, carrera: 2 });
     const SG = await materias.create({ nombre: "Sistemas de Gestión", anio: 5, carrera: 2 });
-    const GG = await materias.create({ nombre: "Gestión Gerencial", anio: 5 , carrera: 2});
+    const GG = await materias.create({ nombre: "Gestión Gerencial", anio: 5, carrera: 2 });
     const SSI = await materias.create({ nombre: "Seguridad en los Sistemas de Información", anio: 5, carrera: 2 });
     const PFs = await materias.create({ nombre: "Proyecto Final", anio: 5, carrera: 2 });
 
