@@ -9,7 +9,7 @@ export default function Mecanica() {
 
   useEffect(() => {
     const Materias = async () => {
-      const materias = await axios.get('https://mi-backend.onrender.com/materiasMecanica')
+      const materias = await axios.get('https://appwebgestionmaterias.onrender.com/materiasMecanica')
       //ordena por anio
       const materiasOrdenadas = materias.data.slice().sort((a, b) => a.anio - b.anio)
       setMaterias(materiasOrdenadas)
@@ -39,7 +39,7 @@ export default function Mecanica() {
     try {
       console.log("data a enviar:", materiaActualizada);
 
-      const aprobada = await axios.put(`https://mi-backend.onrender.com/materiasMecanica/${materiaActualizada.id}`, materiaActualizada)
+      const aprobada = await axios.put(`hhttps://appwebgestionmaterias.onrender.com/materiasMecanica/${materiaActualizada.id}`, materiaActualizada)
       if (aprobada) {
         //alert('Aprobasteeeeeee');
 
@@ -75,7 +75,7 @@ export default function Mecanica() {
     try {
       console.log("data a enviar:", materiaActualizada);
 
-      const desaprobada = await axios.put(`https://mi-backend.onrender.com/materiasMecanica/${materiaActualizada.id}`, materiaActualizada)
+      const desaprobada = await axios.put(`https://appwebgestionmaterias.onrender.com/materiasMecanica/${materiaActualizada.id}`, materiaActualizada)
       if (desaprobada) {
         //alert('Quitaste la aprobacion');
 
