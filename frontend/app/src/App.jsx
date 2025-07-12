@@ -12,9 +12,10 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path='/' element={<Menu></Menu>}  />
-        <Route path='/mecanica' element={<Mecanica></Mecanica>}  />
-        <Route path='/sistemas' element={<Sistemas></Sistemas>}  />
-        <Route path='/utnfrc' element={<UTNFRC></UTNFRC>}  />
+        <Route path='/utnfrc' element={<UTNFRC></UTNFRC>} />
+        <Route path='/utnfrc/mecanica' element={<Mecanica></Mecanica>}  />
+        <Route path='/utnfrc/sistemas' element={<Sistemas></Sistemas>}  />
+        
       </Routes>
     </BrowserRouter>
   )

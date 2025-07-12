@@ -16,7 +16,6 @@ app.use(router)
 app.use(seguridadRouter);
 app.use(usuariosRouter);
 
-
 async function dbInit() {
     await db.sync({ force: true })
 
@@ -194,8 +193,9 @@ async function dbInit() {
 
 };
 
+const PORT = process.env.PORT || 4000;
 dbInit().then(() => {
-    app.listen(4000, async () => {
+    app.listen(PORT, async () => {
         console.log('Sincronizando base de datos')
     })
 })
