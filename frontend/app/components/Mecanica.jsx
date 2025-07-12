@@ -10,6 +10,7 @@ export default function Mecanica() {
   useEffect(() => {
     const Materias = async () => {
       const materias = await axios.get(`${import.meta.env.VITE_API_URL}/materiasMecanica`)
+      console.log(import.meta.env.VITE_API_URL, 'hola')
       //ordena por anio
       const materiasOrdenadas = materias.data.slice().sort((a, b) => a.anio - b.anio)
       setMaterias(materiasOrdenadas)
