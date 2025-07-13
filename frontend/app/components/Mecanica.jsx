@@ -140,100 +140,119 @@ export default function Mecanica() {
 
       </div>
 
-      {materias.length === 0 ? (
-        <p>No hay materias disponibles</p>
-      ) : (
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          gap: '1rem',
-          flexWrap: 'wrap'
-        }}>
-          {Object.keys(materiasPorAnio)
-            .sort((a, b) => a - b)
-            .map((anio) => (
-              <div key={anio} style={{
-                flex: 1, minWidth: '220px'
-              }}>
-                <h3 style={{ textAlign: 'center', color: 'white' }}> {anio} Año </h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  {materiasPorAnio[anio].map((e, i) => (
-                    <div
-                      key={i}
-                      className={`card shadow-sm mb-4 px-3 py-2 border-0 rounded-4`}
-                      style={{
-                        padding: '1rem',
-                        borderRadius: '12px',
-                        backgroundColor: e.aprobada
-                          ? '#20c997'
-                          : puedeAprobar(e)
-                            ? '#fff'
-                            : '#f3f4f6',
-                        color: !puedeAprobar(e) ? '#9ca3af' : 'inherit',
-                        border: e.aprobada
-                          ? '2px solid #10b981'
-                          : '1px solid #e5e7eb',
-                        transition: '0.3s ease'
-                      }}
-                    >
-                      <div className="card-body" >
-                        <h5 style={{ fontWeight: 'bold' }}>{e.nombre}</h5>
-                        <div className="d-flex flex-wrap justify-content-center gap-1 py-1">
-                          {e.Correlativas.length > 0 && !e.aprobada ? (
-                            e.Correlativas
-                              .filter((c) => !c.aprobada)
-                              .map((c, j) => (
-                                <span
-                                  key={j}
-                                  className="badge bg-primary me-1"
-                                  style={{ fontSize: '0.65rem' }}
+
+      <div className="container my-4">
+        {Object.entries(materiasPorAnio).map(([anio, materias]) => (
+          <div
+            key={anio}
+            className="mb-4 p-3 bg-white rounded shadow-sm"
+            style={{
+              border: '2px solid #dee2e6',
+              borderRadius: '20px',
+            }}
+          >
+            <h4 className="fw-bold text-center mb-3">{anio}° Año</h4>
+
+            <div className="d-flex flex-column gap-3">
+              {materias.length === 0 ? (
+                <p>No hay materias disponibles</p>
+              ) : (
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  gap: '1rem',
+                  flexWrap: 'wrap'
+                }}>
+                  {Object.keys(materiasPorAnio)
+                    .sort((a, b) => a - b)
+                    .map((anio) => (
+                      <div key={anio} style={{
+                        flex: 1, minWidth: '220px'
+                      }}>
+                        <h3 style={{ textAlign: 'center', color: 'white' }}> {anio} Año </h3>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                          {materiasPorAnio[anio].map((e, i) => (
+                            <div
+                              key={i}
+                              className={`card shadow-sm mb-4 px-3 py-2 border-0 rounded-4`}
+                              style={{
+                                padding: '1rem',
+                                borderRadius: '12px',
+                                backgroundColor: e.aprobada
+                                  ? '#20c997'
+                                  : puedeAprobar(e)
+                                    ? '#fff'
+                                    : '#f3f4f6',
+                                color: !puedeAprobar(e) ? '#9ca3af' : 'inherit',
+                                border: e.aprobada
+                                  ? '2px solid #10b981'
+                                  : '1px solid #e5e7eb',
+                                transition: '0.3s ease'
+                              }}
+                            >
+                              <div className="card-body" >
+                                <h5 style={{ fontWeight: 'bold' }}>{e.nombre}</h5>
+                                <div className="d-flex flex-wrap justify-content-center gap-1 py-1">
+                                  {e.Correlativas.length > 0 && !e.aprobada ? (
+                                    e.Correlativas
+                                      .filter((c) => !c.aprobada)
+                                      .map((c, j) => (
+                                        <span
+                                          key={j}
+                                          className="badge bg-primary me-1"
+                                          style={{ fontSize: '0.65rem' }}
+                                        >
+                                          {c.nombre}
+                                        </span>
+                                      ))
+                                  ) : (
+                                    <span></span>
+                                  )}
+                                </div>
+
+                                {e.aprobada ? <button
+                                  onClick={() => handleDesaprobado(e)}
+                                  className="btn btn-secondary"
+                                  disabled={!e.aprobada}
                                 >
-                                  {c.nombre}
-                                </span>
-                              ))
-                          ) : (
-                            <span></span>
-                          )}
+                                  Quitar aprobado
+                                </button> : (
+                                  <button
+                                    onClick={() => handleAprobado(e)}
+                                    className={`btn ${e.aprobada ? 'btn-secondary' : puedeAprobar(e) ? 'btn-success' : 'btn-outline-secondary'}`}
+                                    disabled={e.aprobada || !puedeAprobar(e)}
+                                  >
+                                    {e.aprobada
+                                      ? 'Ya aprobada'
+                                      : !puedeAprobar(e)
+                                        ? 'Correlativas pendientes'
+                                        : 'Aprobar'}
+                                  </button>
+
+                                )}
+                              </div>
+                            </div>
+                          ))}
                         </div>
-
-                        {e.aprobada ? <button
-                          onClick={() => handleDesaprobado(e)}
-                          className="btn btn-secondary"
-                          disabled={!e.aprobada}
-                        >
-                          Quitar aprobado
-                        </button> : (
-                          <button
-                            onClick={() => handleAprobado(e)}
-                            className={`btn ${e.aprobada ? 'btn-secondary' : puedeAprobar(e) ? 'btn-success' : 'btn-outline-secondary'}`}
-                            disabled={e.aprobada || !puedeAprobar(e)}
-                          >
-                            {e.aprobada
-                              ? 'Ya aprobada'
-                              : !puedeAprobar(e)
-                                ? 'Correlativas pendientes'
-                                : 'Aprobar'}
-                          </button>
-
-                        )}
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
-              </div>
-            ))}
-        </div>
-      )
-      }
-      <Link to='/'>
-        <button className='btn btn-secondary'
-          style={{
-            position: 'absolute',
-            top: '20px',
-            left: '20px',
-            zIndex: 1000
-          }}>Volver al menú</button>
-      </Link>
-    </div >
+              )
+              }
+              <Link to='/'>
+                <button className='btn btn-secondary'
+                  style={{
+                    position: 'absolute',
+                    top: '20px',
+                    left: '20px',
+                    zIndex: 1000
+                  }}>Volver al menú</button>
+              </Link>
+            </div >
+          </div>
+        ))}
+      </div>
+
+    </div>
   )
 }
