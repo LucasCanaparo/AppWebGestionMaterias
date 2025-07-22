@@ -71,7 +71,7 @@ export default function Estadisticas() {
                 {/* Pendientes */}
                 <div className="col-md-6">
                     <h4>Pendientes ({totalPendientes})</h4>
-                    {años.map(anio => {
+                    {anios.map(anio => {
                         const bloque = materiasPorAnio[anio];
                         if (bloque.pendientes.length === 0) return null;
 
