@@ -40,7 +40,7 @@ export default function Estadisticas() {
             <div className="row mt-4">
                 <div className="col-md-6">
                     <h4>Aprobadas ({totalAprobadas})</h4>
-                    {años.map(anio => {
+                    {anios.map(anio => {
                         const bloque = materiasPorAnio[anio];
                         if (bloque.aprobadas.length === 0) return null
 
