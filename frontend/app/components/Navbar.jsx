@@ -11,7 +11,7 @@ export default function Navbar() {
 
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">MiApp</a>
+                    <a class="navbar-brand" href="#"><em>Malla Interactiva</em></a>
 
                     <button
                         class="navbar-toggler"
