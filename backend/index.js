@@ -103,6 +103,7 @@ async function dbInit() {
     await PF.addCorrelativas([EM, DM, CA, E2, I2]);
 
 
+    /*
     //Creando materias para sistemas
     //1er año
     const LED = await materias.create({ nombre: "Lógica y Estructuras Discretas", anio: 1, carrera: 2 });
@@ -177,6 +178,7 @@ async function dbInit() {
     await GG.addCorrelativas([LEG, ADSI]);
     await SSI.addCorrelativas([RDA, ADSI, DDS, COM]);
     await PFs.addCorrelativas([ICS, RDA, ADSI]);
+    */
 
 };
 

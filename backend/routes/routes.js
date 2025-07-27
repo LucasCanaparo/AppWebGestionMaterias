@@ -23,6 +23,7 @@ router.get('/materiasMecanica', async (req, res) => {
     }
 })
 
+/*
 router.get('/materiasSistemas', async (req, res) => {
     try {
         const data = await services.getAll({
@@ -40,6 +41,7 @@ router.get('/materiasSistemas', async (req, res) => {
         res.status(500).json({ error: 'No se encontraron materias de sistemas' })
     }
 })
+    */
 
 
 router.put('/materiasMecanica/:id', async (req, res) => {

@@ -128,7 +128,7 @@ export default function Mecanica() {
     }}>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous"></link>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-      <h1 style={{ color: 'white' }}>Malla Ingenieria Mecánica</h1>
+      <h1 style={{ color: 'white' }}>Malla de Ingenieria Mecánica</h1>
 
       {materias.length === 0 ? (
         <p>No hay materias disponibles</p>
@@ -215,14 +215,15 @@ export default function Mecanica() {
         </div>
       )
       }
-      <Link to='/'>
+      
+      <Link to='/estadisticas'>
         <button className='btn btn-secondary'
           style={{
             position: 'absolute',
             top: '20px',
             left: '20px',
             zIndex: 1000
-          }}>Volver al menú</button>
+          }}>Estadisticas</button>
       </Link>
     </div >
   )
