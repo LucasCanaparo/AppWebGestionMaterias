@@ -74,7 +74,7 @@ export default function Mecanica() {
     try {
       console.log("data a enviar:", materiaActualizada);
 
-      const desaprobada = await axios.put(`http://localhost:4000/materiasMecanica/${materiaActualizada.id}`, materiaActualizada)
+      const desaprobada = await axios.put(`${import.meta.env.VITE_API_URL}/materiasMecanica/${materiaActualizada.id}`, materiaActualizada)
       if (desaprobada) {
         //alert('Quitaste la aprobacion');
 
