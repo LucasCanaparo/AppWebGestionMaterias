@@ -10,7 +10,7 @@ export default function Estadisticas() {
     const [materias, setMaterias] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:4000/materiasMecanica`)
+        axios.get(`${import.meta.env.VITE_API_URL}/materiasMecanica`)
             .then(res => setMaterias(res.data))
             .catch(err => console.error("Error al cargar materias:", err));
     }, []);
