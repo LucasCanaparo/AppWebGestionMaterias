@@ -8,7 +8,7 @@ export default function Mecanica() {
 
   useEffect(() => {
     const Materias = async () => {
-      const materias = await axios.get('http://localhost:4000/materiasMecanica')
+      const materias = await axios.get(`${import.meta.env.VITE_API_URL}/materiasMecanica`)
       //ordena por anio
       const materiasOrdenadas = materias.data.slice().sort((a, b) => a.anio - b.anio)
       setMaterias(materiasOrdenadas)
@@ -38,7 +38,7 @@ export default function Mecanica() {
     try {
       console.log("data a enviar:", materiaActualizada);
 
-      const aprobada = await axios.put(`http://localhost:4000/materiasMecanica/${materiaActualizada.id}`, materiaActualizada)
+      const aprobada = await axios.put(`${import.meta.env.VITE_API_URL}/materiasMecanica/${materiaActualizada.id}`, materiaActualizada)
       if (aprobada) {
         //alert('Aprobasteeeeeee');
 
