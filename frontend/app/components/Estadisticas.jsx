@@ -4,6 +4,8 @@ import axios from 'axios'
 import {
     PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
+import html2pdf from 'html2pdf.js';
+import { useRef } from 'react';
 
 export default function Estadisticas() {
 
@@ -36,6 +38,22 @@ export default function Estadisticas() {
 
     const COLORS = ['#28a745', '#dc3545']; // verde y rojo
 
+    //para descarga PDF
+    const pdfRef = useRef();
+
+    const handleDownloadPDF = () => {
+        const element = pdfRef.current;
+        const opt = {
+            margin: 0.5,
+            filename: 'estadisticas-carrera.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save();
+    };
+
     return (
         <div>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous"></link>
@@ -49,8 +67,11 @@ export default function Estadisticas() {
             }}>
 
                 <h2 >Estadisticas de tu carrera</h2>
+                <button className="btn btn-outline-light mt-3" onClick={handleDownloadPDF}>
+                    Descargar PDF
+                </button>
 
-                <div className="row mt-4">
+                <div className="row mt-4" ref={pdfRef}>
                     <div className="col-md-6">
                         <h4>Aprobadas ({totalAprobadas})</h4>
                         {anios.map(anio => {
