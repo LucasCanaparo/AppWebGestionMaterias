@@ -69,15 +69,18 @@ router.put('/materiasMecanica/:id', async (req, res) => {
     }
 })
 
-/*
+
 //ruta para el chatbot
-router.post('/materiasMecanica', async (req, res) => {
+router.post('/pregunta', async (req, res) => {
     const query = req.body.queryResult?.queryText?.toLowerCase()
 
     console.log(query)
 
     const añoMatch = query.match(/(\d+)/)
     const año = añoMatch ? parseInt(añoMatch[1]) : null
+
+    console.log(añoMatch)
+    console.log(año)
 
     if (!año) {
         return res.json({
@@ -86,17 +89,23 @@ router.post('/materiasMecanica', async (req, res) => {
     }
 
     // Buscar en tu base de datos
-    const materias = await services.findAll({ where: { anio: año, carrera: 1 } })
+    const materias = await services.getAll({ where: { anio: año, carrera: 1 } })
 
     if (!materias || materias.length === 0) {
         return res.json({
             fulfillmentText: `No encontré materias para ${año}° año.`,
         });
     }
+    else {
+        return res.json({
+            fulfillmentText: `Hay ${materias.length} materias en ${año}° año.`,
+        });
+    }
 })
-*/
 
-router.post('/materiasMecanica', (req, res) => {
+
+/*
+router.post('/pregunta', (req, res) => {
     console.log("<zdsczdxcv")
     console.log('✅ Webhook recibió algo:', req.body.queryResult?.queryText);
 
@@ -104,6 +113,7 @@ router.post('/materiasMecanica', (req, res) => {
         fulfillmentText: 'Webhook activo y funcionando 🔥',
     });
 });
+
 
 router.post('/pregunta', async (req, res) => {
     try {
@@ -123,6 +133,7 @@ router.post('/pregunta', async (req, res) => {
         res.status(500).json({ error: 'Error al crear el producto' });
     }
 });
+*/
 
 
 export default router
