@@ -69,4 +69,60 @@ router.put('/materiasMecanica/:id', async (req, res) => {
     }
 })
 
+/*
+//ruta para el chatbot
+router.post('/materiasMecanica', async (req, res) => {
+    const query = req.body.queryResult?.queryText?.toLowerCase()
+
+    console.log(query)
+
+    const añoMatch = query.match(/(\d+)/)
+    const año = añoMatch ? parseInt(añoMatch[1]) : null
+
+    if (!año) {
+        return res.json({
+            fulfillmentText: 'No entendí qué año querés consultar. ¿Podés repetirlo?',
+        })
+    }
+
+    // Buscar en tu base de datos
+    const materias = await services.findAll({ where: { anio: año, carrera: 1 } })
+
+    if (!materias || materias.length === 0) {
+        return res.json({
+            fulfillmentText: `No encontré materias para ${año}° año.`,
+        });
+    }
+})
+*/
+
+router.post('/materiasMecanica', (req, res) => {
+    console.log("<zdsczdxcv")
+    console.log('✅ Webhook recibió algo:', req.body.queryResult?.queryText);
+
+    res.json({
+        fulfillmentText: 'Webhook activo y funcionando 🔥',
+    });
+});
+
+router.post('/pregunta', async (req, res) => {
+    try {
+        const { nombre, anio, carrera } = req.body;
+
+        console.log(req.body)
+
+        const nuevaMateria = await services.crearMateria({
+            nombre,
+            anio,
+            carrera,
+        });
+
+        res.json(nuevaMateria);
+    } catch (error) {
+        console.log("Error al crear el producto:", error);
+        res.status(500).json({ error: 'Error al crear el producto' });
+    }
+});
+
+
 export default router

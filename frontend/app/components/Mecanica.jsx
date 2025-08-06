@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import Chatbot from './Chatbot';
 
 export default function Mecanica() {
 
@@ -117,6 +118,8 @@ export default function Mecanica() {
 
 
 
+
+
   return (
     <div style={{
       width: '100%',
@@ -224,6 +227,7 @@ export default function Mecanica() {
             zIndex: 1000
           }}>Estadisticas</button>
       </Link>
+      <Chatbot></Chatbot>
     </div >
   )
 }

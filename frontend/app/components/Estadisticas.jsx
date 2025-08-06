@@ -6,6 +6,7 @@ import {
 } from 'recharts';
 import html2pdf from 'html2pdf.js';
 import { useRef } from 'react';
+import '../CSS/Estadisticas.css'
 
 export default function Estadisticas() {
 

@@ -27,6 +27,19 @@ const actualizarEstado = async (id, data) => {
     }
 }
 
+async function crearMateria(datos) {
+    try {
+        const nuevaMateria = await materias.create({
+            nombre: datos.nombre,
+            anio: datos.anio,
+            carrera: datos.carrera,
+        });
+        return nuevaMateria;
+    } catch (error) {
+        console.log("Error al crear el producto")
+    }
+};
+
 export default {
-    getAll, actualizarEstado
+    getAll, actualizarEstado, crearMateria
 }
